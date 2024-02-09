@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        {{ title }}
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #ff9966, #ff5e62);
+            color: #333;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 1.875rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0 0.9375rem 0 rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            max-width: 40rem;
+            width: 100%;
+        }
+
+        .form-container:hover {
+            box-shadow: 0 0 0.9375rem 0.3125rem rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-scrollable-area {
+            max-height: 25rem;
+            overflow-y: auto;
+            margin-bottom: 1.25rem;
+            padding-left: 0.5rem;
+            padding-right: 0.625rem;
+        }
+
+        .form-scrollable-area::-webkit-scrollbar {
+            width: 0.625rem;
+        }
+
+        .form-scrollable-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .form-scrollable-area::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+
+        .form-scrollable-area::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .btn {
+            background-color: #ff5e62;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #ff9966;
+        }
+
+        .form-title {
+            margin-bottom: 1.25rem;
+            text-align: center;
+        }
+
+        .required-star {
+            color: red;
+        }
+
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            color: #6c757d;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .footer a {
+            color: #6c757d;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <h2 class="form-title">{{ title }}</h2>
+        {% if success_message %}
+        <div class="alert alert-success" role="alert">
+            {{ success_message }}
+        </div>
+        {% endif %}
+        {% if error_message %}
+        <div class="alert alert-danger" role="alert">
+            {{ error_message }}
+        </div>
+        {% endif %}
+        <form method="POST">
+            <div class="form-scrollable-area">
+                {% for field in fields %}
+                <div class="form-group">
+                    <label for="{{ field.name }}">{{ field.label }}{% if field.required %}<span
+                            class="required-star">*</span>{% endif %}</label>
+                    <input type="{{ field.type }}" id="{{ field.name }}" name="{{ field.name }}" class="form-control"
+                        placeholder="{{ field.placeholder }}" {% if field.required %} required {% endif %}>
+                </div>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn">
+                {{ button_text }}
+            </button>
+        </form>
+    </div>
+    <footer class="footer">
+        <div class="container text-center">
+            <a href="/submissions">Submissions</a> |
+            <a href="https://github.com/the0mikkel/flask-form">GitHub</a>
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+version: '3'
+services:
+  web:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - ./data/:/app/data/
+    # If using Proxy:
+    expose:
+      - 5000
+    # If not using Proxy:
+    # ports:
+    #   - 5000:5000
+    command: gunicorn -b :5000 app:app
+    stop_grace_period: 1s
+    networks:
+      - nginx-proxy
+
+networks:
+  nginx-proxy:
+    external: true
